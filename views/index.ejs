@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Searching</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Pokemon Search</h1>
+
+    <form action="/search" method="POST">
+        <label for="name">Pokemon's Name</label>
+        <input type="text" id="name" name="name" value="<%= searchName %>" required>
+        
+        <button type="submit">Search Pokemon</button>
+        <label> 
+            <input type="checkbox" name="shiny">
+            Show Shiny
+        </label>
+    </form>
+
+    <% if (error) { %> 
+        <p><%= error %></p>    
+    <% } %>
+
+    <% if (pokemon) { %>
+    <div class="pokemon-card">
+        <h2><%= pokemon.name %></h2>
+        <p><%= genus %></p>
+        <img src="<%= shiny ? pokemon.sprites.front_shiny : pokemon.sprites.front_default %>" alt="picture of <%= pokemon.name %>">
+        <p>ID: <%= pokemon.id %></p>
+        <p>Height: <%= (pokemon.height / 10).toFixed(2) %> m</p>
+        <p>Weight: <%= (pokemon.weight / 10).toFixed(2) %> kg</p>
+        <h3>Types: </h3>
+        
+        <% for(let type of pokemon.types) { %>
+            <p><%= type.type.name %></p>
+        <% } %>
+        <h3>Abilities: </h3>
+
+        <% for(let ability of pokemon.abilities) { %>
+            <p><%= ability.ability.name %></p>
+        <% } %>
+        <h3>Base Stats: </h3>
+
+        <% for (let stat of pokemon.stats) { %>
+        <div class="stat">
+            <span><%= stat.stat.name %></span>
+            <span><%= stat.base_stat %></span>
+        </div>
+        <% } %>
+    
+    </div>    
+    <% } %>
+
+</body>
+</html>
